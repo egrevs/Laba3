@@ -14,7 +14,7 @@ public class Shed extends Building implements RaiseQuantityOfWorkers {
         super(name, capacity);
     }
 
-    @Override // TODO exception
+    @Override
     public void addWorker(Worker worker) {
         System.out.println("На вакасию о работе " + worker.getProfession().getName() + " с зараплатой в "
                 + worker.getProfession().getMonthSalary() + ".руб в " + this.name + " откликнулся "
