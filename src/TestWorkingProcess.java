@@ -69,6 +69,7 @@ public class TestWorkingProcess {
         bookKeeper1.rehabilitate();
         System.out.println();
 
+        //посчет всех денег (заработок)
         ponchik.countAllMoney();
         ponchik.countMoneyForBoss();
 
