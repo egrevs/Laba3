@@ -1,7 +1,7 @@
 package Interfaces;
 
-import models.HandlingProduct;
+import models.Products.Weapon;
 
 public interface AbleToSecure {
-    public String secureBuilding(HandlingProduct handlingProduct);
+    public String secureBuilding(Weapon weapon);
 }

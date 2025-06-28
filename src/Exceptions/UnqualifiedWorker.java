@@ -1,7 +1,7 @@
 package Exceptions;
 
-public class UnQualifiedWorker extends RuntimeException {
-    public UnQualifiedWorker(String message) {
+public class UnqualifiedWorker extends RuntimeException {
+    public UnqualifiedWorker(String message) {
         super(message);
     }
 

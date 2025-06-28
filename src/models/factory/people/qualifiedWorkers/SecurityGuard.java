@@ -2,7 +2,8 @@ package models.factory.people.qualifiedWorkers;
 
 import Exceptions.UnableToWork;
 import Interfaces.AbleToSecure;
-import models.HandlingProduct;
+import models.Products.HandlingProduct;
+import models.Products.Weapon;
 import models.enums.WorkerHealth;
 import models.enums.WorkerProfession;
 import models.factory.people.Worker;
@@ -10,20 +11,20 @@ import models.factory.people.Worker;
 public class SecurityGuard extends Worker implements AbleToSecure {
 
     public SecurityGuard(String name) {
-        super(name, new HandlingProduct("дубинка", 2) );
+        super(name, new Weapon("дубинка", 2) );
         this.efficiency = 10;
         this.strength = 12;
         this.profession = WorkerProfession.SECURITY_GUARD;
     }
 
     @Override
-    public void startWorking(HandlingProduct product) {
+    public <T extends HandlingProduct> void startWorking(T product) {
         if (checkHealth() == WorkerHealth.HEALTHY) {
             System.out.println(this.getProfession().getName() + " " +
-                    this.name + secureBuilding(product) + ".");
+                    this.name + secureBuilding((Weapon) product));
 
-            this.efficiency -= this.handlingProduct.energyConsumption();
-            this.strength -= this.handlingProduct.energyConsumption();
+            this.efficiency -= product.energyConsumption();
+            this.strength -= product.energyConsumption();
         } else
             throw new UnableToWork("");
 
@@ -31,8 +32,8 @@ public class SecurityGuard extends Worker implements AbleToSecure {
     }
 
     @Override
-    public String secureBuilding(HandlingProduct handlingProduct) {
-        return " охраняет помещение с " + handlingProduct.name();
+    public String secureBuilding(Weapon weapon) {
+        return " охраняет помещение с " + weapon.name();
     }
 
     @Override

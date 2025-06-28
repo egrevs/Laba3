@@ -2,7 +2,8 @@ package models.factory.people.qualifiedWorkers;
 
 import Exceptions.UnableToWork;
 import Interfaces.AbleToStore;
-import models.HandlingProduct;
+import models.Products.HandlingProduct;
+import models.Products.Salt;
 import models.enums.WorkerHealth;
 import models.enums.WorkerProfession;
 import models.factory.people.Worker;
@@ -10,25 +11,25 @@ import models.factory.people.Worker;
 public class StoreKeeper extends Worker implements AbleToStore {
 
     public StoreKeeper(String name) {
-        super(name, new HandlingProduct("соль", 2));
+        super(name, new Salt("соль", 2, 150));
         this.efficiency = 7;
         this.strength = 7;
         this.profession = WorkerProfession.STOREKEEPER;
     }
 
     @Override
-    public String storeProduct(HandlingProduct handlingProduct) {
-        return " собирает и раскладывает на складе " + handlingProduct.name();
+    public String storeProduct(Salt salt) {
+        return " собирает и раскладывает на складе " + salt.name();
     }
 
     @Override
-    public void startWorking(HandlingProduct product) {
+    public <T extends HandlingProduct> void startWorking(T product) {
         if (checkHealth() == WorkerHealth.HEALTHY) {
             System.out.println(this.getProfession().getName() + " " +
-                    this.name + storeProduct(product) + ".");
+                    this.name + storeProduct((Salt) product) + ".");
 
-            this.efficiency -= this.handlingProduct.energyConsumption();
-            this.strength -= this.handlingProduct.energyConsumption();
+            this.efficiency -= product.energyConsumption();
+            this.strength -= product.energyConsumption();
         } else
             throw new UnableToWork("");
 

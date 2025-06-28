@@ -1,12 +1,10 @@
 package models.factory.people;
 
 import Exceptions.BuildingOverCrowding;
-import Exceptions.UnQualifiedWorker;
-import Interfaces.AbleToCarry;
-import Interfaces.BusinessExtension;
-import Interfaces.MoneyCountable;
-import Interfaces.OpenWorkingSession;
-import models.HandlingProduct;
+import Exceptions.NoAvailableBuilding;
+import Exceptions.UnqualifiedWorker;
+import Interfaces.*;
+import models.Products.Salt;
 import models.buildings.Building;
 import models.buildings.Shed;
 import models.enums.WorkerProfession;
@@ -23,6 +21,7 @@ public class Ponchik implements AbleToCarry, BusinessExtension, MoneyCountable, 
     private List<Worker> workerList;
     private int balance;
     private int income;
+    private static final Random RANDOM = new Random();
 
 
     public Ponchik(String name, Building building) {
@@ -32,13 +31,9 @@ public class Ponchik implements AbleToCarry, BusinessExtension, MoneyCountable, 
         this.income = 0;
     }
 
-    public void doWork(HandlingProduct product){
-        System.out.println("Раньше " + this.name + " сам" + carryProduct(product) + ".");
-    }
-
     @Override
-    public String carryProduct(HandlingProduct handlingProduct) {
-        return " толочет и тоскет " + handlingProduct.name();
+    public String carryProduct(Salt salt) {
+        return this.name + " толочет и тоскет " + salt.name();
     }
 
     @Override
@@ -53,7 +48,7 @@ public class Ponchik implements AbleToCarry, BusinessExtension, MoneyCountable, 
         for (Worker w : this.workerList) {
             this.balance += w.getWage();
         }
-        System.out.println("За этот месяц заведение " + this.name + " заработало " + this.balance);
+        System.out.println("За этот месяц заведение " + this.name + " заработало " + this.balance + ".руб");
         return balance;
     }
 
@@ -62,7 +57,7 @@ public class Ponchik implements AbleToCarry, BusinessExtension, MoneyCountable, 
         for (Worker w : this.workerList) {
             this.income += w.bossPercent();
         }
-        System.out.println("За этот месяц " + this.name + " заработал " + this.income);
+        System.out.println("За этот месяц " + this.name + " заработал " + this.income + ".руб");
         return income;
     }
 
@@ -73,14 +68,11 @@ public class Ponchik implements AbleToCarry, BusinessExtension, MoneyCountable, 
 
         this.workerList = new ArrayList<>();
 
-        Random random = new Random();
-
-        WorkerProfession[] professions = {WorkerProfession.SECURITY_GUARD, WorkerProfession.LOADER,
-                WorkerProfession.STOREKEEPER, WorkerProfession.BOOKKEEPER};
+        WorkerProfession[] professions = WorkerProfession.values();
 
         if (count <= building.getCapacity()) {
             for (int i = 0; i < count; i++) {
-                this.workerList.add(factory.createWorkerByProfession(professions[random.nextInt(4)]));
+                this.workerList.add(factory.createWorkerByProfession(professions[RANDOM.nextInt(4)]));
             }
         } else
             throw new BuildingOverCrowding("");
@@ -103,7 +95,7 @@ public class Ponchik implements AbleToCarry, BusinessExtension, MoneyCountable, 
 
     public void addWorker(Worker worker) {
         if (worker.getProfession() == WorkerProfession.UN_EMPLOYED) {
-            throw new UnQualifiedWorker("");
+            throw new UnqualifiedWorker("");
         }
 
         if (this.workerList.size() < this.building.getCapacity()) {
@@ -181,8 +173,16 @@ public class Ponchik implements AbleToCarry, BusinessExtension, MoneyCountable, 
                 '}';
     }
 
+    private boolean buildingIsCreated() {
+        return this.building != null;
+    }
+
     @Override
     public void openWorkingDay() {
-        System.out.println(this.name + " объявляет о начале рабочего дня. Все должны приступить к работе.");
+        if (buildingIsCreated()) {
+            System.out.println(this.name + " объявляет о начале рабочего дня. Все должны приступить к работе.");
+        } else
+            throw new NoAvailableBuilding("");
     }
+
 }

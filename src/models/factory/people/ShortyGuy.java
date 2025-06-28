@@ -1,8 +1,8 @@
 package models.factory.people;
 
-import models.HandlingProduct;
-import models.enums.WorkerProfession;
+import models.Products.HandlingProduct;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class ShortyGuy {
@@ -14,7 +14,7 @@ public abstract class ShortyGuy {
         this.name = name;
     }
 
-    public abstract void startWorking(HandlingProduct product);
+    public abstract <T extends HandlingProduct> void startWorking(T product);
 
     public int getEfficiency() {
         return efficiency;

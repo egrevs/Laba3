@@ -2,7 +2,9 @@ package models.factory.people.qualifiedWorkers;
 
 import Exceptions.UnableToWork;
 import Interfaces.AbleToCount;
-import models.HandlingProduct;
+import models.Products.Book;
+import models.Products.HandlingProduct;
+import models.Products.Salt;
 import models.enums.WorkerHealth;
 import models.enums.WorkerProfession;
 import models.factory.people.Worker;
@@ -10,25 +12,25 @@ import models.factory.people.Worker;
 public class BookKeeper extends Worker implements AbleToCount {
 
     public BookKeeper(String name) {
-        super(name, new HandlingProduct("книжка", 2) );
+        super(name, new Book("книжка", 2) );
         this.efficiency = 11;
         this.strength = 6;
         this.profession = WorkerProfession.BOOKKEEPER;
     }
 
     @Override
-    public String countQuantity(HandlingProduct handlingProduct) {
-        return " проводит подсчет привезенного товара" + " в " + handlingProduct.name() + ".";
+    public String countQuantity(Book book) {
+        return " проводит подсчет привезенного товара" + " в " + book.name() + ".";
     }
 
     @Override
-    public void startWorking(HandlingProduct product) {
+    public <T extends HandlingProduct> void startWorking(T product) {
         if (checkHealth() == WorkerHealth.HEALTHY) {
             System.out.println(this.getProfession().getName() + " " +
-                    this.name + countQuantity(product));
+                    this.name + countQuantity((Book) product));
 
-            this.efficiency -= this.handlingProduct.energyConsumption();
-            this.strength -= this.handlingProduct.energyConsumption();
+            this.efficiency -= product.energyConsumption();
+            this.strength -= product.energyConsumption();
         } else
             throw new UnableToWork("");
 

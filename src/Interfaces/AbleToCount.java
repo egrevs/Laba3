@@ -1,7 +1,7 @@
 package Interfaces;
 
-import models.HandlingProduct;
+import models.Products.Book;
 
 public interface AbleToCount {
-    public String countQuantity(HandlingProduct handlingProduct);
+    public String countQuantity(Book book);
 }

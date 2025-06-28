@@ -1,8 +1,9 @@
-import models.HandlingProduct;
+import models.Products.Book;
+import models.Products.HandlingProduct;
+import models.Products.Salt;
+import models.Products.Weapon;
 import models.buildings.Building;
 import models.buildings.Shed;
-import models.enums.WorkerHealth;
-import models.enums.WorkerProfession;
 import models.factory.WorkerFactory;
 import models.factory.people.Ponchik;
 import models.factory.people.Worker;
@@ -17,11 +18,11 @@ public class TestWorkingProcess {
         Ponchik ponchik = new Ponchik("Пончик", building);
         WorkerFactory factory = new WorkerFactory();
 
-        HandlingProduct salt = new HandlingProduct("соль", 3);
-        HandlingProduct weapon = new HandlingProduct("пистолет", 2);
-        HandlingProduct book = new HandlingProduct("бухгалтерская книжка", 1);
+        HandlingProduct salt = new Salt("соль", 3, 150);
+        HandlingProduct weapon = new Weapon("пистолет", 2);
+        HandlingProduct book = new Book("бухгалтерская книжка", 1);
 
-        ponchik.doWork(salt);
+        ponchik.carryProduct((Salt) salt);
 
         ponchik.generateWorkers(factory, 14);
 

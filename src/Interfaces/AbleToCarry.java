@@ -1,7 +1,7 @@
 package Interfaces;
 
-import models.HandlingProduct;
+import models.Products.Salt;
 
 public interface AbleToCarry {
-    public String carryProduct(HandlingProduct handlingProduct);
+    public String carryProduct(Salt salt);
 }

@@ -10,6 +10,7 @@ import models.factory.people.qualifiedWorkers.StoreKeeper;
 import java.util.Random;
 
 public class WorkerFactory {
+    private static final Random RANDOM = new Random();
 
     public Worker createWorkerByProfession(WorkerProfession profession) {
         Worker worker = null;
@@ -18,17 +19,15 @@ public class WorkerFactory {
                 "Максим", "Егор", "Николай", "Альберт", "Артур", "Людмила", "Андрей", "Инна",
                 "Роман", "Светлана", "Георгий", "Ксения"};
 
-        Random random = new Random();
-
         worker = switch (profession) {
             case STOREKEEPER ->
-                    new StoreKeeper(names[random.nextInt(names.length)]);
+                    new StoreKeeper(names[RANDOM.nextInt(names.length)]);
             case SECURITY_GUARD ->
-                    new SecurityGuard(names[random.nextInt(names.length)]);
+                    new SecurityGuard(names[RANDOM.nextInt(names.length)]);
             case LOADER ->
-                    new Loader(names[random.nextInt(names.length)]);
+                    new Loader(names[RANDOM.nextInt(names.length)]);
             case BOOKKEEPER ->
-                    new BookKeeper(names[random.nextInt(names.length)]);
+                    new BookKeeper(names[RANDOM.nextInt(names.length)]);
             default -> worker;
         };
 

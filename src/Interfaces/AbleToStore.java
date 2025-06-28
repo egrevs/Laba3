@@ -1,7 +1,7 @@
 package Interfaces;
 
-import models.HandlingProduct;
+import models.Products.Salt;
 
 public interface AbleToStore {
-    public String storeProduct(HandlingProduct handlingProduct);
+    public String storeProduct(Salt salt);
 }

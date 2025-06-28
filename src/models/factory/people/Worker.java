@@ -1,12 +1,11 @@
 package models.factory.people;
 
-import Exceptions.UnQualifiedWorker;
+import Exceptions.UnqualifiedWorker;
 import Exceptions.UnableToWork;
 import Interfaces.*;
-import models.HandlingProduct;
+import models.Products.HandlingProduct;
 import models.enums.WorkerHealth;
 import models.enums.WorkerProfession;
-import models.factory.WorkerFactory;
 
 import java.util.Objects;
 import java.util.Random;
@@ -25,16 +24,16 @@ public class Worker extends ShortyGuy implements AbleToRehabilitate{
         this.strength = 1;
     }
 
-    @Override
-    public void startWorking(HandlingProduct product) {
-        if(this.profession == WorkerProfession.UN_EMPLOYED){
-            throw new UnQualifiedWorker("");
-        }
-        if(checkHealth() == WorkerHealth.HEALTHY){
-            System.out.println("Работник " + this.name + " приступает к работе");
-        } else
-            throw new UnableToWork("");
-    }
+//    @Override
+//    public void startWorking(HandlingProduct product) {
+//        if(this.profession == WorkerProfession.UN_EMPLOYED){
+//            throw new UnQualifiedWorker("");
+//        }
+//        if(checkHealth() == WorkerHealth.HEALTHY){
+//            System.out.println("Работник " + this.name + " приступает к работе");
+//        } else
+//            throw new UnableToWork("");
+//    }
 
     public WorkerProfession getProfession() {
         return profession;
@@ -83,6 +82,19 @@ public class Worker extends ShortyGuy implements AbleToRehabilitate{
 
     public int bossPercent() {
         return this.profession.getWagesPerEmployee();
+    }
+
+
+    @Override
+    public <T extends HandlingProduct> void startWorking(T product) {
+        if(this.profession == WorkerProfession.UN_EMPLOYED){
+            throw new UnqualifiedWorker("");
+        }
+        if(checkHealth() == WorkerHealth.HEALTHY){
+            System.out.println("Работник " + this.name + " приступает к работе");
+        } else
+            throw new UnableToWork("");
+
     }
 
     @Override
